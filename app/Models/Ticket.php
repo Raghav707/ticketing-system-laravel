@@ -19,6 +19,8 @@ class Ticket extends Model
         'title',
         'description',
         'status',
+        'customer_name',
+        'customer_email',
     ];
     public function user(): BelongsTo
     {

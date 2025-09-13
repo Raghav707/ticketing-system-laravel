@@ -3,7 +3,7 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h1 class="h3">All Tickets</h1>
+        <h1 class="h3 mb-0">All Tickets</h1>
         <a href="/tickets/create" class="btn btn-primary">Create New Ticket</a>
     </div>
     <div class="card-body">
@@ -18,6 +18,8 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Title</th>
+                    {{-- Add new table header --}}
+                    <th scope="col">Submitted By</th>
                     <th scope="col">Status</th>
                     <th scope="col">Created At</th>
                 </tr>
@@ -27,6 +29,14 @@
                     <tr>
                         <th scope="row">{{ $ticket->id }}</th>
                         <td><a href="/tickets/{{ $ticket->id }}">{{ $ticket->title }}</a></td>
+                        {{-- Add new table cell for submitter's name --}}
+                        <td>
+                            @if($ticket->user_id)
+                                {{ $ticket->user->name }} (Admin)
+                            @else
+                                {{ $ticket->customer_name }} (Guest)
+                            @endif
+                        </td>
                         <td>
                             @if ($ticket->status == 'Open')
                                 <span class="badge bg-success">{{ $ticket->status }}</span>
@@ -40,7 +50,8 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4">There are no tickets.</td>
+                        {{-- Update colspan to match new column count --}}
+                        <td colspan="5">There are no tickets.</td>
                     </tr>
                 @endforelse
             </tbody>

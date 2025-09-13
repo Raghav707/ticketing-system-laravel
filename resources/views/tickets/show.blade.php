@@ -3,7 +3,7 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h1 class="h3">Ticket Details</h1>
+        <h1 class="h3 mb-0">Ticket Details</h1>
         <a href="/tickets" class="btn btn-secondary btn-sm">Back to All Tickets</a>
     </div>
     <div class="card-body">
@@ -16,6 +16,16 @@
         <dl class="row">
             <dt class="col-sm-3">Title</dt>
             <dd class="col-sm-9">{{ $ticket->title }}</dd>
+
+            {{-- Add new block to show submitter's details --}}
+            <dt class="col-sm-3">Submitted By</dt>
+            <dd class="col-sm-9">
+                @if($ticket->user_id)
+                    {{ $ticket->user->name }} &lt;{{ $ticket->user->email }}&gt;
+                @else
+                    {{ $ticket->customer_name }} &lt;{{ $ticket->customer_email }}&gt;
+                @endif
+            </dd>
 
             <dt class="col-sm-3">Status</dt>
             <dd class="col-sm-9">
