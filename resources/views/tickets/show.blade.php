@@ -17,5 +17,10 @@
     <a href="/tickets">Back to All Tickets</a>
     <a href="/tickets/{{ $ticket->id }}/edit">Edit Ticket</a>
     <a href="/tickets">Back to All Tickets</a>
+    <form action="/tickets/{{ $ticket->id }}" method="POST" style="display: inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" onclick="return confirm('Are you sure you want to delete this ticket?')">Delete Ticket</button>
+    </form>
 </body>
 </html>
