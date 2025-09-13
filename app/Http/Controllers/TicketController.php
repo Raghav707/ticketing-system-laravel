@@ -13,8 +13,15 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = auth()->user()->tickets;
-        return view('tickets.index', ['tickets' => $tickets]);
+        if (auth()->user()->is_admin) {
+            // If the user is an admin, fetch all tickets
+            $tickets = Ticket::latest()->get();
+        } else {
+            // If they are a regular user, fetch only their own tickets
+            $tickets = auth()->user()->tickets()->latest()->get();
+        }
+
+        return view('tickets.index', compact('tickets'));
     }
 
     /**
