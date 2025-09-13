@@ -13,7 +13,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::all();
+        $tickets = auth()->user()->tickets;
         return view('tickets.index', ['tickets' => $tickets]);
     }
 
@@ -37,11 +37,7 @@ class TicketController extends Controller
         ]);
 
         // Create the new ticket
-        Ticket::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'status' => $request->status,
-        ]);
+        $request->user()->tickets()->create($request->all());
 
         // Redirect back to the list with a success message
         return redirect('/tickets')->with('success', 'Ticket created successfully!');
