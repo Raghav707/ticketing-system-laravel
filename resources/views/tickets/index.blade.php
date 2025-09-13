@@ -15,7 +15,7 @@
     @else
         <ul>
             @foreach ($tickets as $ticket)
-                <li>{{ $ticket->title }} ({{ $ticket->status }})</li>
+                <li><a href="/tickets/{{ $ticket->id }}">{{ $ticket->title }}</a> ({{ $ticket->status }})</li>
             @endforeach
         </ul>
     @endif

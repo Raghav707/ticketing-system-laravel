@@ -50,25 +50,35 @@ class TicketController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Ticket $ticket)
     {
-        //
+        return view('tickets.show', ['ticket' => $ticket]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Ticket $ticket)
     {
-        //
+        return view('tickets.edit', ['ticket' => $ticket]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Ticket $ticket)
     {
-        //
+        // Validate the data
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        // Update the ticket
+        $ticket->update($request->all());
+
+        // Redirect back to the ticket's page with a success message
+        return redirect('/tickets/' . $ticket->id)->with('success', 'Ticket updated successfully!');
     }
 
     /**
